@@ -1,0 +1,67 @@
+* antes de rodas as query's deve instalar o postgresSQL e fazer as alterações de conexão na classe conexãoBD *
+
+
+insert into artista (nome)
+values ('IRON MAIDEN')
+
+insert into artista (nome)
+values ('BEYONCÉ')
+
+insert into artista (nome)
+values ('RIHANNA')
+
+insert into musica (nome,data_lancamento,id_artista)
+values ('UMBRELLA','2007-03-29',1)
+
+insert into musica (nome,data_lancamento,id_artista)
+values ('IF I WERE A BOY','2008-10-12',2)
+
+
+insert into musica (nome,data_lancamento,id_artista)
+values ('FEAR OF THE DARK','1992-05-11',3)
+
+
+insert into musica (nome,data_lancamento,id_artista)
+values ('NUMBER OF THE BEAST','1982-03-22',3)
+
+insert into musica (nome,data_lancamento,id_artista)
+values ('THE TROOPER','1983-06-20',3)
+
+
+create table artista (
+	codigo int DEFAULT nextval('id_artista'),
+	nome varchar(150),
+	constraint pk_artista primary key(codigo)
+);
+
+create table musica(
+	codigo int DEFAULT nextval('id_musica'),
+	nome varchar(50) not null,
+	data_lancamento date not null,
+	id_artista int not null,
+	constraint pk_musica primary key (codigo),
+	constraint fk_musica_artista foreign key (id_artista) references artista(codigo)
+);
+
+
+create table usuario(
+    codigo integer NOT NULL DEFAULT nextval('id_usuario'),
+    nome varchar(50)  NOT NULL,
+    login varchar(20) NOT NULL,
+    senha varchar(20)  NOT NULL,
+    email varchar(100)  NOT NULL,
+    CONSTRAINT pk_usuario PRIMARY KEY (codigo)
+)
+
+CREATE SEQUENCE id_usuario
+INCREMENT 1
+START 1;
+
+
+CREATE SEQUENCE id_musica
+INCREMENT 1
+START 1;
+
+CREATE SEQUENCE id_artista
+INCREMENT 1
+START 1;
