@@ -14,22 +14,22 @@ body,html{
     border: 0;
     width: 100vw;
     height: 100vh;
+    overflow-x: hidden;
 }
 
 .form-login{
     display: table;
     margin: 0 auto;
+    margin-top: 5%;
     border: 1px solid black;
     
 }
 
 .back-login{
-
-    border: 1px solid red;
     width:100%
 }
 
-#inputLogin,#inputSenha,btn{
+#inputLogin,#inputSenha,.btn-primary{
     margin:  10px 0;
 }
 

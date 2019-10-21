@@ -9,15 +9,27 @@ url = url.substring(0, url.lastIndexOf('/'));
 $(function () {
     var codigo = document.cookie;
     codigo = codigo.substring(codigo.indexOf("=") + 1, codigo.indexOf("_"))
-    $.ajax({
-        url: `${url}/rest/usuario/${codigo}/feed`,
-        type: "GET",
-        success: function (data) {
-            console.log(data)
-        }
-    });
+    if (codigo == null || codigo == 0) {
+        window.location.href = `${url}/login.html`;
+    } else {
+        $.ajax({
+            url: `${url}/rest/usuario/${codigo}/feed`,
+            type: "GET",
+            success: function (data) {
+                console.log(data)
+            }
+        });
+    }
+
+
 });
 
+
+$("#logout").on("click", function () {
+
+    window.location.href = `${url}/login.html`;
+
+});
 
 $("#btn-pesquisar").on("click", function () {
     var nome = $("#example-search-input").val();
@@ -26,7 +38,7 @@ $("#btn-pesquisar").on("click", function () {
         url: `${url}/rest/musica/${nome}`,
         type: "GET",
         success: function (data) {
-             $(".container").empty();
+            $(".container").empty();
 
             for (var k in data) {
                 $(".container").append(`<div class="card mb-4 shadow-sm">
