@@ -62,3 +62,6 @@ values ('NUMBER OF THE BEAST','1982-03-22',3);
 
 insert into musica (nome,data_lancamento,id_artista)
 values ('THE TROOPER','1983-06-20',3);
+
+insert into usuario(nome,login,senha,email)
+values('Administrador','adm','admin69','teste@gmail.com')
