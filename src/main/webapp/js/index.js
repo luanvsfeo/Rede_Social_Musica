@@ -63,39 +63,79 @@ $("#btn-publicar").on("click", function () {
     json['criado_em'] = Date.now().toString();
 
     file_data = $("#foto")[0].files[0];
-    var nome = file_data.name
 
 
-    if (nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0) {
-        var form = new FormData();
-        form.append('file', file_data);
-        form.append('json', JSON.stringify(json));
 
-        $.ajax({
-            url: `${url}/rest/post/`,
-            type: "POST",
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            enctype: 'multipart/form-data',
-            data: form,
-            success: function (data) {//verificar pq nao esta caindo no sucess
-                $("#texto-post").val("");
-                console.log("a")
+    if (file_data) {
+        console.log(file_data)
+        var nome = file_data.name
 
-            }, error: function (request, status, error) {
 
-                if (request.status == 200) {
+
+        if (file_data != null && nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0) {
+
+            var form = new FormData();
+            form.append('file', file_data);
+            form.append('json', JSON.stringify(json));
+
+            $.ajax({
+                url: `${url}/rest/post/`,
+                type: "POST",
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                enctype: 'multipart/form-data',
+                data: form,
+                success: function (data) {//verificar pq nao esta caindo no sucess
                     $("#texto-post").val("");
-                    $('.custom-file-label').html("")
-                } else {
-                    alert(request.status);
+                    console.log("a")
+
+                }, error: function (request, status, error) {
+
+                    if (request.status == 200) {
+                        $("#texto-post").val("");
+                        $('.custom-file-label').html("")
+                    } else {
+                        alert(request.status);
+                    }
                 }
-            }
-        });
-    } else {
-        alert("tipo invalido, apenas .jpg ou .png")
+            });
+        } else {
+            alert("tipo invalido, apenas .jpg ou .png")
+        }
+    }else{
+          var form = new FormData();
+          
+            form.append('json', JSON.stringify(json));
+
+            $.ajax({
+                url: `${url}/rest/post/`,
+                type: "POST",
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                enctype: 'multipart/form-data',
+                data: form,
+                success: function (data) {//verificar pq nao esta caindo no sucess
+                    $("#texto-post").val("");
+                    console.log("a")
+
+                }, error: function (request, status, error) {
+
+                    if (request.status == 200) {
+                        $("#texto-post").val("");
+                        $('.custom-file-label').html("")
+                    } else {
+                        alert(request.status);
+                    }
+                }
+            });
     }
+
+
+
+
+
 
 });
 

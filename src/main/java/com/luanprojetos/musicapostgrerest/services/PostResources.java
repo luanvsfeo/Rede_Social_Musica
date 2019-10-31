@@ -31,12 +31,18 @@ public class PostResources {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response newPost(@FormDataParam("file") File inputfile, @FormDataParam("file") FormDataContentDisposition fileMetaData, @FormDataParam("json") String json) throws IOException {//
 
-       
-
-        if (new PostDao().setNewPost(json,inputfile)) {
-            return Response.ok().build();
+        if (inputfile == null) {
+            if (new PostDao().setNewPostWithoutImage(json)) {
+                return Response.ok().build();
+            } else {
+                return Response.serverError().build();
+            }
         } else {
-            return Response.serverError().build();
+            if (new PostDao().setNewPostWithImage(json, inputfile)) {
+                return Response.ok().build();
+            } else {
+                return Response.serverError().build();
+            }
         }
 
     }
