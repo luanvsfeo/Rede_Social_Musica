@@ -1,7 +1,10 @@
-C:\Users\Luan\Documents\NetBeansProjects\MusicaPostgreRest\src\main\java\com\luanprojetos\musicapostgrerest\models\Musica.java
-C:\Users\Luan\Documents\NetBeansProjects\MusicaPostgreRest\src\main\java\com\luanprojetos\musicapostgrerest\dao\MusicaDao.java
-C:\Users\Luan\Documents\NetBeansProjects\MusicaPostgreRest\src\main\java\com\luanprojetos\musicapostgrerest\services\UsuarioResources.java
-C:\Users\Luan\Documents\NetBeansProjects\MusicaPostgreRest\src\main\java\com\luanprojetos\musicapostgrerest\connetion\ConexaoBd.java
-C:\Users\Luan\Documents\NetBeansProjects\MusicaPostgreRest\src\main\java\com\luanprojetos\musicapostgrerest\services\MusicaResources.java
-C:\Users\Luan\Documents\NetBeansProjects\MusicaPostgreRest\src\main\java\com\luanprojetos\musicapostgrerest\dao\UsuarioDao.java
-C:\Users\Luan\Documents\NetBeansProjects\MusicaPostgreRest\src\main\java\com\luanprojetos\musicapostgrerest\models\Usuario.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\connetion\ConexaoBd.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\services\PostResources.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\models\Musica.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\dao\MusicaDao.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\models\Usuario.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\dao\PostDao.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\dao\UsuarioDao.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\models\Post.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\services\MusicaResources.java
+C:\Users\medilab\musica_projeto\rede_social_musica\src\main\java\com\luanprojetos\musicapostgrerest\services\UsuarioResources.java

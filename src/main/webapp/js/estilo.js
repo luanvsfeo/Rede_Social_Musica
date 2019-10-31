@@ -6,6 +6,7 @@
 
 var url = window.location.href
 url = url.substring(0, url.lastIndexOf('/'));
+
 $("#btn-enviar").on("click", function () {
     console.log(url)
     var login = $("#inputLogin").val();
@@ -23,9 +24,22 @@ $("#btn-enviar").on("click", function () {
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify(json),
         success: function (data) {
-            document.cookie = "usu="+data['codigo']+"_"+data['nome']+"";
-           window.location.href='index.html';
+            document.cookie = "usu=" + data['codigo'] + "_" + data['nome'] + "";
+            localStorage.setItem('usu', data['codigo'].toString())
+            window.location.href = 'index.html';
         }
     });
+
+});
+
+
+
+$(function () {
+ 
+    var codigo =  localStorage.getItem('usu')
+    console.log(codigo)
+    console.log(`${url}/index.html`)
+    
+
 
 });

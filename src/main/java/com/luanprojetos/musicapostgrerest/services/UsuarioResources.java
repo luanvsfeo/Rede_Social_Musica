@@ -6,6 +6,7 @@
 package com.luanprojetos.musicapostgrerest.services;
 
 import com.luanprojetos.musicapostgrerest.connetion.ConexaoBd;
+import com.luanprojetos.musicapostgrerest.dao.PostDao;
 import com.luanprojetos.musicapostgrerest.dao.UsuarioDao;
 import com.luanprojetos.musicapostgrerest.models.Usuario;
 import javax.ws.rs.Consumes;
@@ -41,11 +42,22 @@ public class UsuarioResources {
     @GET
     @Path("{codigo}/feed")
     public Response getFeed(@PathParam("codigo") int codigo) {
-        
+
         return Response.ok().build();
     }
-    
-    
-   
+
+    @GET
+    @Path("{codigo}/posts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPosts(@PathParam("codigo") int codigo) {
+
+        JSONObject a = new JSONObject();
+        JSONObject tempUsu = new UsuarioDao().getUsuarioByCodigo(codigo);
+        a.put("nome", tempUsu.getString("nome"));
+        a.put("posts", new PostDao().getPostByUser(codigo));
+       
+        
+        return Response.ok(a.toString()).build();
+    }
 
 }

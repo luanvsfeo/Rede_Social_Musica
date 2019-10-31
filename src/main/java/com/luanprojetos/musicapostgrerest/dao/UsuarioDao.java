@@ -38,4 +38,23 @@ public class UsuarioDao extends ConexaoBd {
         }
 
     }
+
+    public JSONObject getUsuarioByCodigo(int codigo) {
+        JSONObject jsonResposta = null;
+        try {
+            String SQL = "Select * from usuario where codigo = ?  ";
+            PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
+            stmt.setInt(1, codigo);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Usuario usuTemp = new Usuario(rs.getInt("codigo"), rs.getString("nome"));
+                jsonResposta = new JSONObject(usuTemp.getAsJsonString());
+            }
+            return jsonResposta;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

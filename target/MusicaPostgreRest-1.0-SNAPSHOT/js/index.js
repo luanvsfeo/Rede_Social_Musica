@@ -8,7 +8,7 @@ var url = window.location.href
 url = url.substring(0, url.lastIndexOf('/'));
 $(function () {
     var codigo = document.cookie;
-    codigo = codigo.substring(codigo.indexOf("=") + 1, codigo.indexOf("_"))
+    codigo = localStorage.getItem('usu')
     if (codigo == null || codigo == 0) {
         window.location.href = `${url}/login.html`;
     } else {
@@ -26,7 +26,7 @@ $(function () {
 
 
 $("#logout").on("click", function () {
-
+    localStorage.removeItem('usu')
     window.location.href = `${url}/login.html`;
 
 });
@@ -46,12 +46,65 @@ $("#btn-pesquisar").on("click", function () {
                 <div class="card-body">${data[k].nomeArtista}</div>
                 <div class="card-body">${data[k].dataLancamento}</div>
             </div>`)
-
             }
-
-
-
         }
     });
 
 });
+
+
+$("#btn-publicar").on("click", function () {
+    var texto = $("#texto-post").val();
+
+    var json = {};
+
+    json['texto'] = texto;
+    json['criado_por'] = localStorage.getItem('usu');
+    json['criado_em'] = Date.now().toString();
+
+    file_data = $("#foto")[0].files[0];
+    var nome = file_data.name
+
+
+    if (nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0) {
+        var form = new FormData();
+        form.append('file', file_data);
+        form.append('json', JSON.stringify(json));
+
+        $.ajax({
+            url: `${url}/rest/post/`,
+            type: "POST",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            enctype: 'multipart/form-data',
+            data: form,
+            success: function (data) {//verificar pq nao esta caindo no sucess
+                $("#texto-post").val("");
+                console.log("a")
+
+            }, error: function (request, status, error) {
+
+                if (request.status == 200) {
+                    $("#texto-post").val("");
+                    $('.custom-file-label').html("")
+                } else {
+                    alert(request.status);
+                }
+            }
+        });
+    } else {
+        alert("tipo invalido, apenas .jpg ou .png")
+    }
+
+});
+
+$('#foto').on('change', function () {
+    //get the file name
+    var fileName = $(this).val();
+    //fileName = fileName.substring(fileName.lastIndexOf("\"));
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+})
+
+

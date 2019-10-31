@@ -22,6 +22,7 @@ body,html{
     margin: 0 auto;
     margin-top: 5%;
     border: 1px solid black;
+    border-radius: 8px; 
     
 }
 
@@ -35,4 +36,19 @@ body,html{
 
 header{
     margin-bottom: 85px;
+}
+
+
+#perfil-card{
+    margin-bottom: 50px;
+}
+
+#img-usu{
+    
+}
+
+.img-border{
+    border: 2px solid rgba(0,0,0,0.2);
+   border-radius: 5px;
+   max-height: 600px;
 }

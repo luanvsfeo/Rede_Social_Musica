@@ -9,27 +9,27 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
-                <a class="navbar-brand" href="#">IMusic</a>
+                <a class="navbar-brand" href="index.html">IMusic</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                                       <ul class="navbar-nav mr-auto">
-                                            <li class="nav-item active">
-                                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">Profile</a>
-                                            </li><li class="nav-item">
-                                                <a class="nav-link"  id="logout" href="#">Logout</a>
-                                            </li>
-                                         
-                                        </ul>
-                                        <form class="form-inline mt-2 mt-md-0">
-<!--                                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="perfil.html">Profile</a>
+                        </li><li class="nav-item">
+                            <a class="nav-link"  id="logout" href="#">Logout</a>
+                        </li>
 
-                                        </form>
+                    </ul>
+                    <form class="form-inline mt-2 mt-md-0">
+                        <!--                                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                                                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+
+                    </form>
                     <div class="input-group col-md-4">
                         <input class="form-control py-2 border-right-0 border" type="search" placeholder="search" id="example-search-input">
                         <span class="input-group-append">
@@ -44,10 +44,16 @@
 
         <div class="container">
             <div class="card mb-4 shadow-sm">
-                <div class="card-header">retert</div>
-                <div class="card-body">é isso aqui é uium teset</div>
+                <!--                <div class="card-header">retert</div>-->
+                <div class="card-body"><textarea class="form-control" id="texto-post" rows="2"></textarea></div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="foto">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                
+                <div class="card-footer"><button type="submit" class="btn btn-primary" id="btn-publicar">Publicar</button></div>
             </div>
-          
+
         </div>
 
         <script src="./lib/jquery/jquery-3.4.1.js"></script>

@@ -12,11 +12,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.glassfish.jersey.*;
 
 /**
  *
@@ -25,17 +27,24 @@ import org.json.JSONObject;
 public class ConexaoBd {
 
     /* ver uma maneira de deixa isso editaverl: driver,url,user e pass*/
-    private String driver = "org.postgresql.Driver";
-    private String url = "jdbc:postgresql://localhost:5432/postgres";// editar aqui  
-    private String user = "postgres"; // editar aqui 
-    private String pass = "admin69";// editar aqui 
+    //private String driver = "org.postgresql.Driver";
+    private final String url = "jdbc:firebirdsql:localhost:C:/Medilab/banco_teste_luan/TESTE.FDB";
+    private final String user = "SYSDBA";
+    private final String pass = "masterkey";
+//    private String url = "jdbc:postgresql://localhost:5433/teste";// editar aqui  
+//    private String user = "postgres"; // editar aqui 
+//    private String pass = "medilab";// editar aqui 
     private Connection conn = null;
 
     public Connection getConnetion() {
+
+        Connection con;
+
         try {
-            Class.forName(driver);
-            conn = (Connection) DriverManager.getConnection(url, user, pass);
-            return this.conn;
+            //Class.forName("org.postgresql.Driver");
+            Class.forName("org.firebirdsql.jdbc.FBDriver");
+            conn = DriverManager.getConnection(url, user, pass);
+            return conn;
         } catch (ClassNotFoundException ex) {
             System.out.print(ex.getMessage());
             return null;
@@ -58,39 +67,43 @@ public class ConexaoBd {
         JSONObject jsonObject = null;
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
-        do {
+        int index = 1;
+        while (rs.next() && index < columnCount) {
             jsonObject = new JSONObject();
-            for (int index = 1; index <= columnCount; index++) {
-                String column = rsmd.getColumnName(index);
-                Object value = rs.getObject(column);
-                if (value == null) {
-                    jsonObject.put(column, "");
-                } else if (value instanceof Integer) {
-                    jsonObject.put(column, (Integer) value);
-                } else if (value instanceof String) {
-                    jsonObject.put(column, (String) value);
-                } else if (value instanceof Boolean) {
-                    jsonObject.put(column, (Boolean) value);
-                } else if (value instanceof Date) {
-                    jsonObject.put(column, ((Date) value).getTime());
-                } else if (value instanceof Long) {
-                    jsonObject.put(column, (Long) value);
-                } else if (value instanceof Double) {
-                    jsonObject.put(column, (Double) value);
-                } else if (value instanceof Float) {
-                    jsonObject.put(column, (Float) value);
-                } else if (value instanceof BigDecimal) {
-                    jsonObject.put(column, (BigDecimal) value);
-                } else if (value instanceof Byte) {
-                    jsonObject.put(column, (Byte) value);
-                } else if (value instanceof byte[]) {
-                    jsonObject.put(column, (byte[]) value);
-                } else {
-                    throw new IllegalArgumentException("Unmappable object type: " + value.getClass());
-                }
+
+            String column = rsmd.getColumnName(index);
+            Object value = rs.getObject(column);
+            if (value == null) {
+                jsonObject.put(column, "");
+            } else if (value instanceof Integer) {
+                jsonObject.put(column, (Integer) value);
+            } else if (value instanceof String) {
+                jsonObject.put(column, (String) value);
+            } else if (value instanceof Boolean) {
+                jsonObject.put(column, (Boolean) value);
+            } else if (value instanceof Date) {
+                jsonObject.put(column, ((Date) value).getTime());
+            } else if (value instanceof Long) {
+                jsonObject.put(column, (Long) value);
+            } else if (value instanceof Double) {
+                jsonObject.put(column, (Double) value);
+            } else if (value instanceof Float) {
+                jsonObject.put(column, (Float) value);
+            } else if (value instanceof BigDecimal) {
+                jsonObject.put(column, (BigDecimal) value);
+            } else if (value instanceof Byte) {
+                jsonObject.put(column, (Byte) value);
+            } else if (value instanceof byte[]) {
+                jsonObject.put(column, (byte[]) value);
+            } else if (value instanceof Timestamp) {
+                jsonObject.put(column, (Timestamp) value);
+            } else {
+                throw new IllegalArgumentException("Unmappable object type: " + value.getClass());
             }
             jArray.put(jsonObject);
-        } while (rs.next());
+            index++;
+        }
+
         return jArray;
     }
 }

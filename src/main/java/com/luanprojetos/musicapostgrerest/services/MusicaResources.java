@@ -6,6 +6,7 @@
 package com.luanprojetos.musicapostgrerest.services;
 
 import com.luanprojetos.musicapostgrerest.dao.MusicaDao;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -21,20 +22,33 @@ import org.json.JSONObject;
  */
 @Path("/musica")
 public class MusicaResources {
-    
+
     @GET
     @Path("{nome}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMusicByName(@PathParam("nome") String nome) {
-        
+
         JSONArray resposta = new MusicaDao().getMusicaByName(nome);
-        
+
         if (resposta.isNull(0)) {
             return Response.serverError().build();
         } else {
             return Response.ok().entity(resposta.toString()).build();
         }
-        
+
+    }
+
+    @GET
+    @Path("")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMusicByName() {
+
+        return Response.ok().entity("oi").build();
+
     }
     
+    
+   
+    
+
 }

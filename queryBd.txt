@@ -1,4 +1,4 @@
-* antes de rodas as query's deve instalar o postgresSQL e fazer as alterações de conexão na classe conexãoBD *
+﻿* antes de rodas as query's deve instalar o postgresSQL e fazer as alterações de conexão na classe conexãoBD *
 
 CREATE SEQUENCE id_usuario
 INCREMENT 1
@@ -11,6 +11,26 @@ START 1;
 CREATE SEQUENCE id_artista
 INCREMENT 1
 START 1;
+
+
+CREATE SEQUENCE id_post
+INCREMENT 1
+START 1;
+
+
+create table post(
+	codigo int default nextval('id_post'),
+	texto varchar(500),
+	img bytea,
+	criado_em timestamp not null,
+	criado_por int not null,
+	constraint pk_post primary key(codigo,criado_em,criado_por),
+	constraint fk_post_usuario foreign key (criado_por) references usuario(codigo)
+
+);
+
+
+
 
 create table artista (
 	codigo int DEFAULT nextval('id_artista'),
@@ -65,3 +85,12 @@ values ('THE TROOPER','1983-06-20',3);
 
 insert into usuario(nome,login,senha,email)
 values('Administrador','adm','admin69','teste@gmail.com')
+
+insert into post(texto,criado_em,criado_por)
+values('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa meu deus','2019-10-29  16:03:06','1')
+
+insert into post(texto,img,criado_em,criado_por)
+values('show',<imagem esta num arquivo .txt no repositorio citacoes>,'2019-10-30  16:00:00','1')
+
+
+
