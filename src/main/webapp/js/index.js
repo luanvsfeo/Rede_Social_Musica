@@ -16,7 +16,32 @@ $(function () {
             url: `${url}/rest/usuario/${codigo}/feed`,
             type: "GET",
             success: function (data) {
-                console.log(data)
+
+
+                for (var k in data.posts) {
+                    if (data.posts[k].hasOwnProperty("img")) {
+                        $(".container").append(
+                                `<div class="card mb-4 shadow-sm" id="${data.posts[k].codigo}" >
+                        <div class="card-header">${data.posts[k].nome_criador}</div>
+                        <div class="card-body">
+                        <p class="card-text">${data.posts[k].texto}</p>
+                        <img class="img-fluid img-border" src="data:image/png;base64,${data.posts[k].img}">
+                        </div>`
+                                )
+                    } else {//card-img-bottom
+                        $(".container").append(
+                                `<div class="card mb-4 shadow-sm" id="${data.posts[k].codigo}" >
+                        <div class="card-header">${data.posts[k].nome_criador}</div>
+                        <div class="card-body">
+                        <p class="card-text">${data.posts[k].texto}</p>
+                        </div>`
+                                )
+                    }
+
+                }
+
+
+
             }
         });
     }
@@ -103,33 +128,33 @@ $("#btn-publicar").on("click", function () {
         } else {
             alert("tipo invalido, apenas .jpg ou .png")
         }
-    }else{
-          var form = new FormData();
-          
-            form.append('json', JSON.stringify(json));
+    } else {
+        var form = new FormData();
 
-            $.ajax({
-                url: `${url}/rest/post/`,
-                type: "POST",
-                dataType: "json",
-                contentType: false,
-                processData: false,
-                enctype: 'multipart/form-data',
-                data: form,
-                success: function (data) {//verificar pq nao esta caindo no sucess
+        form.append('json', JSON.stringify(json));
+
+        $.ajax({
+            url: `${url}/rest/post/`,
+            type: "POST",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            enctype: 'multipart/form-data',
+            data: form,
+            success: function (data) {//verificar pq nao esta caindo no sucess
+                $("#texto-post").val("");
+                console.log("a")
+
+            }, error: function (request, status, error) {
+
+                if (request.status == 200) {
                     $("#texto-post").val("");
-                    console.log("a")
-
-                }, error: function (request, status, error) {
-
-                    if (request.status == 200) {
-                        $("#texto-post").val("");
-                        $('.custom-file-label').html("")
-                    } else {
-                        alert(request.status);
-                    }
+                    $('.custom-file-label').html("")
+                } else {
+                    alert(request.status);
                 }
-            });
+            }
+        });
     }
 
 
@@ -142,7 +167,7 @@ $("#btn-publicar").on("click", function () {
 $('#foto').on('change', function () {
     //get the file name
     var fileName = $(this).val();
-    //fileName = fileName.substring(fileName.lastIndexOf("\"));
+    fileName = fileName.substring(fileName.lastIndexOf('th') + 3);
     //replace the "Choose a file" label
     $(this).next('.custom-file-label').html(fileName);
 })

@@ -57,6 +57,14 @@ create table usuario(
     CONSTRAINT pk_usuario PRIMARY KEY (codigo)
 );
 
+
+create table post_usuario(
+   codigo_usuario int not null,
+   codigo_usuario_seguido int not null,
+   constraint pk_usuario_post primary key(codigo_usuario,codigo_usuario_seguido)
+);
+
+
 insert into artista (nome)
 values ('IRON MAIDEN');
 

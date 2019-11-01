@@ -10,13 +10,13 @@ package com.luanprojetos.musicapostgrerest.models;
  * @author medilab
  */
 public class Post {
-    
-    
+
     int codigo;
     String texto;
     String img;
-    String criado_em; 
-    int criado_por ;
+    String criado_em;
+    int criado_por;
+    String nome_criador;
 
     public Post(int codigo, String texto, String img, String criado_em, int criado_por) {
         this.codigo = codigo;
@@ -26,11 +26,27 @@ public class Post {
         this.criado_por = criado_por;
     }
 
-    public Post(){
-        
+    public Post(int codigo, String texto, String img, String criado_em, int criado_por, String nome_criador) {
+        this.codigo = codigo;
+        this.texto = texto;
+        this.img = img;
+        this.criado_em = criado_em;
+        this.criado_por = criado_por;
+        this.nome_criador = nome_criador;
     }
-    
-    
+
+    public Post() {
+
+    }
+
+    public String getNome_criador() {
+        return nome_criador;
+    }
+
+    public void setNome_criador(String nome_criador) {
+        this.nome_criador = nome_criador;
+    }
+
     public int getCodigo() {
         return codigo;
     }
@@ -70,7 +86,5 @@ public class Post {
     public void setCriado_por(int criado_por) {
         this.criado_por = criado_por;
     }
-    
-    
-    
+
 }

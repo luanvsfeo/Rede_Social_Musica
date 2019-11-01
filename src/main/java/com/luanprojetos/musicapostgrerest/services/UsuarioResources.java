@@ -41,9 +41,14 @@ public class UsuarioResources {
 
     @GET
     @Path("{codigo}/feed")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getFeed(@PathParam("codigo") int codigo) {
 
-        return Response.ok().build();
+        JSONObject a = new JSONObject();
+        //JSONObject tempUsu = new UsuarioDao().getUsuarioByCodigo(codigo);
+        //a.put("nome", tempUsu.getString("nome"));
+        a.put("posts", new PostDao().getPostsToFeed(codigo));
+        return Response.ok(a.toString()).build();
     }
 
     @GET
@@ -55,8 +60,7 @@ public class UsuarioResources {
         JSONObject tempUsu = new UsuarioDao().getUsuarioByCodigo(codigo);
         a.put("nome", tempUsu.getString("nome"));
         a.put("posts", new PostDao().getPostByUser(codigo));
-       
-        
+
         return Response.ok(a.toString()).build();
     }
 

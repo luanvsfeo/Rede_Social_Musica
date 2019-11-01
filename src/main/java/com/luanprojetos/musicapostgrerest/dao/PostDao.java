@@ -45,6 +45,31 @@ public class PostDao extends ConexaoBd {
         }
     }
 
+    public JSONArray getPostsToFeed(int codigo) {
+        JSONArray resposta = new JSONArray();
+        try {
+            String SQL = "select p.*,u.nome as nome_criador from post p,usuario u\n"
+                    + "where\n"
+                    + "u.codigo = p.criado_por and\n"
+                    + "p.criado_por in\n"
+                    + "(select CODIGO_USUARIO_SEGUIDO from post_usuario where CODIGO_USUARIO = ?)\n"
+                    + "order by criado_em desc";
+
+//codigo para postgres: select codigo,texto,criado_em,criado_por,encode(img, 'escape') img from post where criado_por = ?  order by criado_em desc 
+            PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
+            stmt.setString(1, Integer.toString(codigo));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                resposta.put(new JSONObject(new Post(rs.getInt("codigo"), rs.getString("texto"), rs.getString("img"), rs.getTimestamp("criado_em").toString(), rs.getInt("criado_por"),rs.getString("nome_criador"))));
+            }
+
+            return resposta;
+        } catch (SQLException e) {
+            return resposta;
+        }
+    }
+
     public boolean setNewPostWithImage(String json, File inputfile) throws IOException {
         byte[] fileContent = FileUtils.readFileToByteArray(inputfile);
         String encodedString = Base64.getEncoder().encodeToString(fileContent);
@@ -60,7 +85,7 @@ public class PostDao extends ConexaoBd {
             String SQL = "insert into post(codigo,texto,criado_em,criado_por,img)\n"
                     + "values((SELECT GEN_ID( id_post, 1 ) FROM RDB$DATABASE),?,?,?,?)";
             //postgres: insert into post(texto,criado_em,criado_por,img)values(?,?,?,?)
-            
+
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
             stmt.setString(1, jsonObj.getString("texto"));
             stmt.setString(2, dateString);
@@ -77,7 +102,7 @@ public class PostDao extends ConexaoBd {
         }
 
     }
-    
+
     public boolean setNewPostWithoutImage(String json) throws IOException {
 
         JSONObject jsonObj = new JSONObject(json);
@@ -92,7 +117,7 @@ public class PostDao extends ConexaoBd {
             String SQL = "insert into post(codigo,texto,criado_em,criado_por)\n"
                     + "values((SELECT GEN_ID( id_post, 1 ) FROM RDB$DATABASE),?,?,?)";
             //postgres: insert into post(texto,criado_em,criado_por)values(?,?,?)
-            
+
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
             stmt.setString(1, jsonObj.getString("texto"));
             stmt.setString(2, dateString);
