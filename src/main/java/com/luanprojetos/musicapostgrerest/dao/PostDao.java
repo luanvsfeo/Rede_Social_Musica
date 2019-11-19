@@ -29,14 +29,17 @@ public class PostDao extends ConexaoBd {
     public JSONArray getPostByUser(int codigo) {
         JSONArray resposta = new JSONArray();
         try {
-            String SQL = "select * from post where criado_por = ?  order by criado_em desc ";
+            String SQL = "select p.*,m.nome as nome_musica from post p left JOIN musica m ON p.cod_musica = m.codigo\n"
+                    + "where\n"
+                    + " p.criado_por = ? \n"
+                    + "order by criado_em desc ";
 //codigo para postgres: select codigo,texto,criado_em,criado_por,encode(img, 'escape') img from post where criado_por = ?  order by criado_em desc 
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
             stmt.setString(1, Integer.toString(codigo));
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                resposta.put(new JSONObject(new Post(rs.getInt("codigo"), rs.getString("texto"), rs.getString("img"), rs.getTimestamp("criado_em").toString(), rs.getInt("criado_por"))));
+                resposta.put(new JSONObject(new Post(rs.getInt("codigo"), rs.getString("texto"), rs.getString("img"), rs.getTimestamp("criado_em").toString(), rs.getInt("criado_por"), rs.getString("nome_musica"))));
             }
 
             return resposta;
@@ -48,20 +51,19 @@ public class PostDao extends ConexaoBd {
     public JSONArray getPostsToFeed(int codigo) {
         JSONArray resposta = new JSONArray();
         try {
-            String SQL = "select p.*,u.nome as nome_criador from post p,usuario u\n"
+            String SQL = "select p.*,u.nome as nome_criador,m.nome as nome_musica from usuario u,post p left JOIN musica m ON p.cod_musica = m.codigo\n"
                     + "where\n"
                     + "u.codigo = p.criado_por and\n"
                     + "p.criado_por in\n"
                     + "(select CODIGO_USUARIO_SEGUIDO from post_usuario where CODIGO_USUARIO = ?)\n"
                     + "order by criado_em desc";
-
-//codigo para postgres: select codigo,texto,criado_em,criado_por,encode(img, 'escape') img from post where criado_por = ?  order by criado_em desc 
+            //codigo para postgres: select codigo,texto,criado_em,criado_por,encode(img, 'escape') img from post where criado_por = ?  order by criado_em desc 
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
             stmt.setString(1, Integer.toString(codigo));
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                resposta.put(new JSONObject(new Post(rs.getInt("codigo"), rs.getString("texto"), rs.getString("img"), rs.getTimestamp("criado_em").toString(), rs.getInt("criado_por"),rs.getString("nome_criador"))));
+                resposta.put(new JSONObject(new Post(rs.getInt("codigo"), rs.getString("texto"), rs.getString("img"), rs.getTimestamp("criado_em").toString(), rs.getInt("criado_por"),Integer.toString(rs.getInt("cod_musica")), rs.getString("nome_criador"), rs.getString("nome_musica"))));
             }
 
             return resposta;

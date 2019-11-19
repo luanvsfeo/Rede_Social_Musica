@@ -64,4 +64,22 @@ public class UsuarioResources {
         return Response.ok(a.toString()).build();
     }
 
+    @POST
+    @Path("/seguir")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response followUsu(String json) {
+
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/nome/{nome}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findUsubyName(@PathParam("nome") String nome) {
+        JSONObject a = new JSONObject();
+
+        a.put("usuarios", new UsuarioDao().getUsuarioByName(nome));
+
+        return Response.ok(a.toString()).build();
+    }
 }

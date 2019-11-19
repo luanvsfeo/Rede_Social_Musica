@@ -7,7 +7,7 @@ package com.luanprojetos.musicapostgrerest.models;
 
 /**
  *
- * @author medilab
+ * @author Luan
  */
 public class Post {
 
@@ -16,27 +16,61 @@ public class Post {
     String img;
     String criado_em;
     int criado_por;
+    String cod_musica;
     String nome_criador;
+    String nome_musica;
 
-    public Post(int codigo, String texto, String img, String criado_em, int criado_por) {
+    public Post(int codigo, String texto, String img, String criado_em, int criado_por, String nome_musica) {
+        //usado para perfil
         this.codigo = codigo;
         this.texto = texto;
         this.img = img;
         this.criado_em = criado_em;
         this.criado_por = criado_por;
+        this.nome_musica = nome_musica;
     }
 
-    public Post(int codigo, String texto, String img, String criado_em, int criado_por, String nome_criador) {
+    public Post(int codigo, String texto, String img, String criado_em, int criado_por, String cod_musica, String nome_musica) {
+        //usado para perfil
+        this.codigo = codigo;
+        this.texto = texto;
+        this.img = img;
+        this.criado_em = criado_em;
+        this.criado_por = criado_por;
+        this.cod_musica = cod_musica;
+        this.nome_musica = nome_musica;
+    }
+
+    public Post(int codigo, String texto, String img, String criado_em, int criado_por, String cod_musica, String nome_criador, String nome_musica) {
+        //usado no feed
         this.codigo = codigo;
         this.texto = texto;
         this.img = img;
         this.criado_em = criado_em;
         this.criado_por = criado_por;
         this.nome_criador = nome_criador;
+        this.nome_musica = nome_musica;
     }
 
     public Post() {
 
+    }
+
+    public String getCod_musica() {
+        return cod_musica;
+    }
+
+    public void setCod_musica(String cod_musica) {
+        this.cod_musica = cod_musica;
+    }
+
+    
+    public String getNome_musica() {
+        return nome_musica;
+    }
+
+    public void setNome_musica(String nome_musica) {
+        this.nome_musica = nome_musica;
     }
 
     public String getNome_criador() {

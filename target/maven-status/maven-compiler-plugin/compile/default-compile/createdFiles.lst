@@ -1,0 +1,10 @@
+com\luanprojetos\musicapostgrerest\dao\PostDao.class
+com\luanprojetos\musicapostgrerest\services\PostResources.class
+com\luanprojetos\musicapostgrerest\dao\MusicaDao.class
+com\luanprojetos\musicapostgrerest\models\Usuario.class
+com\luanprojetos\musicapostgrerest\dao\UsuarioDao.class
+com\luanprojetos\musicapostgrerest\models\Post.class
+com\luanprojetos\musicapostgrerest\services\MusicaResources.class
+com\luanprojetos\musicapostgrerest\connetion\ConexaoBd.class
+com\luanprojetos\musicapostgrerest\services\UsuarioResources.class
+com\luanprojetos\musicapostgrerest\models\Musica.class

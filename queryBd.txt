@@ -24,6 +24,7 @@ create table post(
 	img bytea,
 	criado_em timestamp not null,
 	criado_por int not null,
+	cod_musica int,
 	constraint pk_post primary key(codigo,criado_em,criado_por),
 	constraint fk_post_usuario foreign key (criado_por) references usuario(codigo)
 
