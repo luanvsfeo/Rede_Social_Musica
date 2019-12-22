@@ -131,7 +131,7 @@ $("#btn-publicar").on("click", function () {
 
 
 
-        if (file_data != null && nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0) {
+        if (file_data != null && nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0 || nome.indexOf(".jpeg") > 0 ) {
 
             var form = new FormData();
             form.append('file', file_data);

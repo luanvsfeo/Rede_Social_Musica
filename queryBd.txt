@@ -17,22 +17,6 @@ CREATE SEQUENCE id_post
 INCREMENT 1
 START 1;
 
-
-create table post(
-	codigo int default nextval('id_post'),
-	texto varchar(500),
-	img bytea,
-	criado_em timestamp not null,
-	criado_por int not null,
-	cod_musica int,
-	constraint pk_post primary key(codigo,criado_em,criado_por),
-	constraint fk_post_usuario foreign key (criado_por) references usuario(codigo)
-
-);
-
-
-
-
 create table artista (
 	codigo int DEFAULT nextval('id_artista'),
 	nome varchar(150),
@@ -48,7 +32,6 @@ create table musica(
 	constraint fk_musica_artista foreign key (id_artista) references artista(codigo)
 );
 
-
 create table usuario(
     codigo integer NOT NULL DEFAULT nextval('id_usuario'),
     nome varchar(50)  NOT NULL,
@@ -56,6 +39,18 @@ create table usuario(
     senha varchar(20)  NOT NULL,
     email varchar(100)  NOT NULL,
     CONSTRAINT pk_usuario PRIMARY KEY (codigo)
+);
+
+create table post(
+	codigo int default nextval('id_post'),
+	texto varchar(500),
+	img bytea,
+	criado_em timestamp not null,
+	criado_por int not null,
+	cod_musica int,
+	constraint pk_post primary key(codigo,criado_em,criado_por),
+	constraint fk_post_usuario foreign key (criado_por) references usuario(codigo)
+
 );
 
 
@@ -76,30 +71,38 @@ insert into artista (nome)
 values ('RIHANNA');
 
 insert into musica (nome,data_lancamento,id_artista)
-values ('UMBRELLA','2007-03-29',1);
+values ('UMBRELLA','2007-03-29',3);
 
 insert into musica (nome,data_lancamento,id_artista)
 values ('IF I WERE A BOY','2008-10-12',2);
 
 
 insert into musica (nome,data_lancamento,id_artista)
-values ('FEAR OF THE DARK','1992-05-11',3);
+values ('FEAR OF THE DARK','1992-05-11',1);
 
 
 insert into musica (nome,data_lancamento,id_artista)
-values ('NUMBER OF THE BEAST','1982-03-22',3);
+values ('NUMBER OF THE BEAST','1982-03-22',1);
 
 insert into musica (nome,data_lancamento,id_artista)
-values ('THE TROOPER','1983-06-20',3);
+values ('THE TROOPER','1983-06-20',1);
+
+insert into usuario(nome,login,senha,email);
+values('Administrador','adm','admin69','teste@gmail.com');
 
 insert into usuario(nome,login,senha,email)
-values('Administrador','adm','admin69','teste@gmail.com')
+values('Teste','teste','teste123','testea@gmail.com');
 
 insert into post(texto,criado_em,criado_por)
-values('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa meu deus','2019-10-29  16:03:06','1')
+values('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa meu deus','2019-10-29  16:03:06','1');
 
 insert into post(texto,img,criado_em,criado_por)
-values('show',<imagem esta num arquivo .txt no repositorio citacoes>,'2019-10-30  16:00:00','1')
+values('show','<imagem esta num arquivo .txt no repositorio citacoes>','2019-10-30  16:00:00','1');
 
+insert into post_usuario
+values(1,2);
+
+insert into post_usuario
+values(2,1);
 
 
