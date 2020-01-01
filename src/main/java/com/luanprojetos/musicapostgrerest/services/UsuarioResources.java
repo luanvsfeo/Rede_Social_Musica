@@ -68,8 +68,12 @@ public class UsuarioResources {
     @Path("/seguir")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response followUsu(String json) {
-
-        return Response.ok().build();
+  
+        if (new UsuarioDao().followUsuario(json)) {
+            return Response.ok().build();
+        } else {
+            return Response.serverError().build();
+        }
     }
 
     @GET

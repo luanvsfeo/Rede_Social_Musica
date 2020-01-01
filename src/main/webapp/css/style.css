@@ -27,7 +27,9 @@ body,html{
 }
 
 .back-login{
-    width:100%
+    width:100%;
+    position: relative;
+    top: 50px;
 }
 
 #inputLogin,#inputSenha,.btn-primary{

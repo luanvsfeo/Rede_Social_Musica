@@ -96,4 +96,19 @@ public class UsuarioDao extends ConexaoBd {
         }
     }
 
+    public boolean followUsuario(String json) {
+
+        try {
+            
+            String SQL = "";
+            PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
+            stmt.setInt(1, 0);
+            stmt.setInt(2, 0);
+            stmt.execute();
+            
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }

@@ -20,7 +20,29 @@ $(document).ready(function () {
 
 
                 for (var k in data.posts) {
-                    if (data.posts[k].hasOwnProperty("img")) {
+                    if (data.posts[k].hasOwnProperty("img") && data.posts[k].hasOwnProperty("nome_musica")) {
+                        $(".container").append(
+                                `<div class="card mb-4 " id="${data.posts[k].codigo}" >
+                        <div class="card-header">${data.posts[k].nome_criador}</div>
+                        <div class="card-body">
+                        <p class="card-text">${data.posts[k].texto}</p>
+                        <img class="img-fluid img-border" src="data:image/png;base64,${data.posts[k].img}">
+                        </div> <div class="card-footer">
+                        <p class="card-text">Ouvindo: ${data.posts[k].nome_musica}</p>
+                        </div>`
+                                )
+                    } else if (data.posts[k].hasOwnProperty("nome_musica")) {//card-img-bottom
+                        $(".container").append(
+                                `<div class="card mb-4 " id="${data.posts[k].codigo}" >
+                        <div class="card-header">${data.posts[k].nome_criador}</div>
+                        <div class="card-body">
+                        <p class="card-text">${data.posts[k].texto}</p>
+                        </div>
+                        <div class="card-footer">
+                        <p class="card-text">Ouvindo: ${data.posts[k].nome_musica}</p>
+                        </div>`
+                                )
+                    } else if (data.posts[k].hasOwnProperty("img")) {
                         $(".container").append(
                                 `<div class="card mb-4 " id="${data.posts[k].codigo}" >
                         <div class="card-header">${data.posts[k].nome_criador}</div>
@@ -29,7 +51,7 @@ $(document).ready(function () {
                         <img class="img-fluid img-border" src="data:image/png;base64,${data.posts[k].img}">
                         </div>`
                                 )
-                    } else {//card-img-bottom
+                    } else {
                         $(".container").append(
                                 `<div class="card mb-4 " id="${data.posts[k].codigo}" >
                         <div class="card-header">${data.posts[k].nome_criador}</div>
@@ -38,6 +60,7 @@ $(document).ready(function () {
                         </div>`
                                 )
                     }
+
 
                 }
 
@@ -96,19 +119,21 @@ $("#btn-pesquisar-musica").on("click", function () {
 
             for (var k in data) {
                 $(".modal-body").append(`<div  id="${data[k].codigo}"  class="alert alert-dark">
-                <div ><span>${data[k].nome}</span>
-                <small>${data[k].nomeArtista}</small></div>
+                <div ><span class="nome-musica">${data[k].nome}</span>
+                <small class="artista-musica">${data[k].nomeArtista}</small></div>
                 <div>
                 <button type="button" class="btn btn-light "> 
                 <span class="oi oi-play-circle"  aria-hidden="true"></span>
                 </button>       
                 
-                <button type="button" class="btn btn-light ">selecionar</button>
+                <button type="button" class="btn btn-light seleciona">selecionar</button>
                 </div>
             </div>`)
             }
         }
     });
+
+
 
 });
 
@@ -120,6 +145,7 @@ $("#btn-publicar").on("click", function () {
     json['texto'] = texto;
     json['criado_por'] = localStorage.getItem('usu');
     json['criado_em'] = Date.now().toString();
+    json['cod_musica'] = $('.musica').attr('id');
 
     file_data = $("#foto")[0].files[0];
 
@@ -131,18 +157,15 @@ $("#btn-publicar").on("click", function () {
 
 
 
-        if (file_data != null && nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0 || nome.indexOf(".jpeg") > 0 ) {
+        if (file_data != null && nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0 || nome.indexOf(".jpeg") > 0) {
 
             var form = new FormData();
             form.append('file', file_data);
             form.append('json', JSON.stringify(json));
-
             $.ajax({
                 url: `${url}/rest/post/`,
                 type: "POST",
                 dataType: "json",
-                contentType: false,
-                processData: false,
                 enctype: 'multipart/form-data',
                 data: form,
                 success: function (data) {//verificar pq nao esta caindo no sucess
@@ -225,7 +248,7 @@ $(document).on('click', '.btn-seguir', function () {
     json['id_usu_seguir'] = id;
 
     $.ajax({
-        url: `${url}/rest/post/`,
+        url: `${url}/rest/usuario/seguir/`,
         type: "POST",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
@@ -242,3 +265,16 @@ $(document).on('click', '.btn-seguir', function () {
 
 })
 
+
+$(document).on('click', '.seleciona', function () {
+
+    var clicado = $(this).parents()[1].id;
+    var clicadoNome = $(this).parents()[1];
+    console.log($(this).parents()[1])
+    $('.musica').attr('id', clicado)
+    $('.fade').trigger('click');
+    var nome = $('.nome-musica').text();
+    var artista = $('.artista-musica').text();
+    $('.musica').attr('placeholder', nome + '_ ' + artista);
+
+})

@@ -32,7 +32,7 @@ public class PostDao extends ConexaoBd {
     public JSONArray getPostByUser(int codigo) {
         JSONArray resposta = new JSONArray();
         try {
-            String SQL = "select p.codigo,p.texto,p.criado_em,p.criado_por,img, m.nome as nome_musica\n"
+            String SQL = "select p.codigo,p.texto,p.criado_em,p.criado_por,img_base_64 as img, m.nome as nome_musica\n"
                     + "from post p left join musica m on m.codigo = p.cod_musica\n"
                     + "where \n"
                     + "criado_por = ?\n"
@@ -55,7 +55,7 @@ public class PostDao extends ConexaoBd {
     public JSONArray getPostsToFeed(int codigo) {
         JSONArray resposta = new JSONArray();
         try {
-                String SQL = "select p.codigo,p.texto,p.criado_em,p.criado_por,encode(img, 'escape') img, m.nome as nome_musica, u.nome as nome_criador, m.codigo as cod_musica\n"
+            String SQL = "select p.codigo,p.texto,p.criado_em,p.criado_por,img_base_64 as img, m.nome as nome_musica, u.nome as nome_criador, m.codigo as cod_musica\n"
                     + "from usuario u,post p left join musica m on m.codigo = p.cod_musica\n"
                     + "where \n"
                     + "u.codigo = p.criado_por and \n"
@@ -90,13 +90,14 @@ public class PostDao extends ConexaoBd {
         Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
         try {
-            String SQL = " insert into post(texto,criado_em,criado_por,img)values(?,?,?,?)";
+            String SQL = " insert into post(texto,criado_em,criado_por,img,img_base_64)values(?,?,?,?,?)";
 
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
             stmt.setString(1, jsonObj.getString("texto"));
             stmt.setTimestamp(2, timestamp);
             stmt.setInt(3, Integer.parseInt(jsonObj.getString("criado_por")));
             stmt.setBinaryStream(4, new FileInputStream(inputfile));
+            stmt.setString(5, encodedString);
 
             stmt.execute();
 
@@ -119,14 +120,26 @@ public class PostDao extends ConexaoBd {
 
         java.util.Date parsedDate = format.parse(dateString);
         Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-
         try {
-            String SQL = " insert into post(texto,criado_em,criado_por)values(?,?,?)";
+            PreparedStatement stmt;
+            String SQL;
+            if (jsonObj.has("cod_musica")) {
+                SQL = " insert into post(texto,criado_em,criado_por,cod_musica)values(?,?,?,?)";
 
-            PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
-            stmt.setString(1, jsonObj.getString("texto"));
-            stmt.setTimestamp(2, timestamp);
-            stmt.setInt(3, Integer.parseInt(jsonObj.getString("criado_por")));
+                stmt = super.getConnetion().prepareStatement(SQL);
+                stmt.setString(1, jsonObj.getString("texto"));
+                stmt.setTimestamp(2, timestamp);
+                stmt.setInt(3, Integer.parseInt(jsonObj.getString("criado_por")));
+                stmt.setInt(4, Integer.parseInt(jsonObj.getString("cod_musica")));
+            } else {
+                SQL = " insert into post(texto,criado_em,criado_por)values(?,?,?)";
+
+                stmt = super.getConnetion().prepareStatement(SQL);
+                stmt.setString(1, jsonObj.getString("texto"));
+                stmt.setTimestamp(2, timestamp);
+                stmt.setInt(3, Integer.parseInt(jsonObj.getString("criado_por")));
+
+            }
 
             stmt.execute();
 
