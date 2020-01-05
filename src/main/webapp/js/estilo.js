@@ -18,7 +18,7 @@ $("#btn-enviar").on("click", function () {
 
     console.log(json)
     $.ajax({
-        url: `${url}/rest/usuario/`,
+        url: `${url}/rest/usuario/login`,
         type: "POST",
         dataType: "json",
         contentType: "application/json;charset=utf-8",
@@ -30,6 +30,36 @@ $("#btn-enviar").on("click", function () {
         }
     });
 
+});
+
+
+
+$("#btn-cadastrar").on("click",function (){
+    
+   var login = $("#inputLogin").val();
+   var nome = $("#inputNome").val();
+   var senha = $("#inputSenha").val();
+   var email = $("#inputEmail").val();
+   
+   var json  = {};
+   
+   json['login'] = login;
+   json['nome'] = nome;
+   json['senha'] = senha;
+   json['email'] = email;
+   
+    $.ajax({
+        url: `${url}/rest/usuario/`,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify(json),
+        success: function (data) {
+            window.location.href = 'login.html';
+        }
+    });
+
+   
 });
 
 

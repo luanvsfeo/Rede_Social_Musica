@@ -97,14 +97,32 @@ public class UsuarioDao extends ConexaoBd {
     }
 
     public boolean followUsuario(String json) {
-
+        JSONObject jsonObj = new JSONObject(json);
         try {
-            
-            String SQL = "";
+
+            String SQL = "insert into post_usuario(codigo_usuario,codigo_usuario_seguido) values(?,?)";
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
-            stmt.setInt(1, 0);
-            stmt.setInt(2, 0);
+            stmt.setInt(1, Integer.parseInt(jsonObj.getString("id_usu")));
+            stmt.setInt(2, Integer.parseInt(jsonObj.getString("id_usu_seguir")));
             stmt.execute();
+
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public boolean newUsuario(String json) {
+        JSONObject jsonObj = new JSONObject(json);
+        try {
+            String SQL = "insert into usuario(nome,login,senha,email) values(?,?,?,?)";
+            PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
+            stmt.setString(1, jsonObj.getString("nome"));
+            stmt.setString(2, jsonObj.getString("login"));
+            stmt.setString(3, jsonObj.getString("senha"));
+            stmt.setString(4, jsonObj.getString("email"));
+            stmt.execute();
+            
             
             return true;
         } catch (Exception ex) {

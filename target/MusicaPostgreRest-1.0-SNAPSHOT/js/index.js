@@ -87,7 +87,7 @@ $("#btn-pesquisar").on("click", function () {
         type: "GET",
         success: function (data) {
             $(".container").empty();
-            console.log(data)
+
             for (var k in data.usuarios) {
                 $(".container").append(`
                 <div id="${data.usuarios[k].codigo}"class="input-group margin-bottom">       
@@ -159,15 +159,19 @@ $("#btn-publicar").on("click", function () {
 
         if (file_data != null && nome.indexOf(".jpg") > 0 || nome.indexOf(".png") > 0 || nome.indexOf(".jpeg") > 0) {
 
-            var form = new FormData();
+            var form = "";
+            form = new FormData();
+
             form.append('file', file_data);
             form.append('json', JSON.stringify(json));
+            console.log(JSON.stringify(json))
             $.ajax({
                 url: `${url}/rest/post/`,
                 type: "POST",
-                dataType: "json",
                 enctype: 'multipart/form-data',
                 data: form,
+                processData: false,
+                contentType: false,
                 success: function (data) {//verificar pq nao esta caindo no sucess
                     $("#texto-post").val("");
                     console.log("a")
@@ -177,6 +181,7 @@ $("#btn-publicar").on("click", function () {
                     if (request.status == 200) {
                         $("#texto-post").val("");
                         $('.custom-file-label').html("")
+                        $('input[text]').attr('placeholder', '');
                     } else {
                         alert(request.status);
                     }
@@ -240,7 +245,7 @@ $('#exampleModalLong').on('hidden.bs.modal', function () {
 $(document).on('click', '.btn-seguir', function () {
 
     var id = $(this).parent().parent().attr('id')
-    console.log(id);
+
 
 
     var json = {};
@@ -270,7 +275,7 @@ $(document).on('click', '.seleciona', function () {
 
     var clicado = $(this).parents()[1].id;
     var clicadoNome = $(this).parents()[1];
-    console.log($(this).parents()[1])
+
     $('.musica').attr('id', clicado)
     $('.fade').trigger('click');
     var nome = $('.nome-musica').text();

@@ -27,7 +27,7 @@ import org.json.JSONObject;
 public class UsuarioResources {
 
     @POST
-    @Path("/")
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(String json) {
         Usuario usu = new Usuario().fromStringToUsuario(json);
@@ -37,6 +37,19 @@ public class UsuarioResources {
         } else {
             return Response.status(404).build();
         }
+    }
+
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response newUser(String json) {
+
+        if (new UsuarioDao().newUsuario(json)) {
+            return Response.ok().build();
+        } else {
+            return Response.serverError().build();
+        }
+
     }
 
     @GET
@@ -68,7 +81,7 @@ public class UsuarioResources {
     @Path("/seguir")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response followUsu(String json) {
-  
+
         if (new UsuarioDao().followUsuario(json)) {
             return Response.ok().build();
         } else {
