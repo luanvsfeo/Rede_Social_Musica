@@ -38,6 +38,7 @@ create table usuario(
     login varchar(20) NOT NULL,
     senha varchar(20)  NOT NULL,
     email varchar(100)  NOT NULL,
+    cod_verificacao varchar(6) NOT NULL,
     CONSTRAINT pk_usuario PRIMARY KEY (codigo)
 );
 

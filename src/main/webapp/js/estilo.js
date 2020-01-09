@@ -34,20 +34,20 @@ $("#btn-enviar").on("click", function () {
 
 
 
-$("#btn-cadastrar").on("click",function (){
-    
-   var login = $("#inputLogin").val();
-   var nome = $("#inputNome").val();
-   var senha = $("#inputSenha").val();
-   var email = $("#inputEmail").val();
-   
-   var json  = {};
-   
-   json['login'] = login;
-   json['nome'] = nome;
-   json['senha'] = senha;
-   json['email'] = email;
-   
+$("#btn-cadastrar").on("click", function () {
+
+    var login = $("#inputLogin").val();
+    var nome = $("#inputNome").val();
+    var senha = $("#inputSenha").val();
+    var email = $("#inputEmail").val();
+
+    var json = {};
+
+    json['login'] = login;
+    json['nome'] = nome;
+    json['senha'] = senha;
+    json['email'] = email;
+
     $.ajax({
         url: `${url}/rest/usuario/`,
         type: "POST",
@@ -55,21 +55,47 @@ $("#btn-cadastrar").on("click",function (){
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify(json),
         success: function (data) {
-            window.location.href = 'login.html';
+            console.log(data)
+            window.location.href = 'verificador.html';
         }
     });
 
-   
+
 });
 
 
 
 $(function () {
- 
-    var codigo =  localStorage.getItem('usu')
+
+    var codigo = localStorage.getItem('usu')
     console.log(codigo)
     console.log(`${url}/index.html`)
-    
+
 
 
 });
+
+
+$("#btn-verificar").on("click", function () {
+    
+    var json = {};
+    
+    json['email'] = $("#inputEmail").val();
+    json['cod_verificacao'] = $("#inputCodigo").val();
+
+    $.ajax({
+        url: `${url}/rest/usuario/verificar/`,
+        type: "PUT",
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify(json),
+        success: function (data) {
+            window.location.href = 'login.html';
+        }, error: function (data) {
+            alert("Por favor preencha antes de cadastrar");
+        }
+    });
+
+
+
+})

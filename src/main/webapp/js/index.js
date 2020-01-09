@@ -176,15 +176,9 @@ $("#btn-publicar").on("click", function () {
                     $("#texto-post").val("");
                     console.log("a")
 
-                }, error: function (request, status, error) {
+                }, error: function (data) {
 
-                    if (request.status == 200) {
-                        $("#texto-post").val("");
-                        $('.custom-file-label').html("")
-                        $('input[text]').attr('placeholder', '');
-                    } else {
-                        alert(request.status);
-                    }
+                   console.log("erro")
                 }
             });
         } else {
@@ -198,7 +192,6 @@ $("#btn-publicar").on("click", function () {
         $.ajax({
             url: `${url}/rest/post/`,
             type: "POST",
-            dataType: "json",
             contentType: false,
             processData: false,
             enctype: 'multipart/form-data',
@@ -207,14 +200,9 @@ $("#btn-publicar").on("click", function () {
                 $("#texto-post").val("");
                 console.log("a")
 
-            }, error: function (request, status, error) {
+            }, error: function (data) {
 
-                if (request.status == 200) {
-                    $("#texto-post").val("");
-                    $('.custom-file-label').html("")
-                } else {
-                    alert(request.status);
-                }
+               console.log("erro")
             }
         });
     }
@@ -231,9 +219,6 @@ $('#foto').on('change', function () {
     fileName = fileName.substring(fileName.lastIndexOf('th') + 3);
     $(this).next('.custom-file-label').html(fileName);
 })
-
-
-
 
 
 $('#exampleModalLong').on('hidden.bs.modal', function () {
@@ -275,11 +260,12 @@ $(document).on('click', '.seleciona', function () {
 
     var clicado = $(this).parents()[1].id;
     var clicadoNome = $(this).parents()[1];
+    var nome = $(clicadoNome).find('.nome-musica').text();
+    var artista = $(clicadoNome).find('.artista-musica').text();
 
     $('.musica').attr('id', clicado)
     $('.fade').trigger('click');
-    var nome = $('.nome-musica').text();
-    var artista = $('.artista-musica').text();
-    $('.musica').attr('placeholder', nome + '_ ' + artista);
+
+    $('.musica').attr('placeholder', nome + ' ' + artista);
 
 })

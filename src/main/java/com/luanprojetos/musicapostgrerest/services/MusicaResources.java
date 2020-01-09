@@ -38,16 +38,6 @@ public class MusicaResources {
 
     }
 
-    @GET
-    @Path("")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getMusicByName() {
-
-        return Response.ok().entity("oi").build();
-
-    }
-    
-    
    
     
 

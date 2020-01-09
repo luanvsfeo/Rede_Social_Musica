@@ -12,6 +12,7 @@ import com.luanprojetos.musicapostgrerest.models.Usuario;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -98,5 +99,18 @@ public class UsuarioResources {
         a.put("usuarios", new UsuarioDao().getUsuarioByName(nome));
 
         return Response.ok(a.toString()).build();
+    }
+
+    @PUT
+    @Path("/verificar/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response validateUsu(String json) {
+
+        if (new UsuarioDao().validateUsuario(json)) {
+            return Response.ok().build();
+        } else {
+            return Response.serverError().build();
+        }
+
     }
 }

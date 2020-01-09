@@ -23,8 +23,7 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        
-      
+              
         <!-- Jersey 2.19 -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -36,20 +35,21 @@
             <artifactId>jersey-server</artifactId>
             <version>${jersey2.version}</version>
         </dependency>
+        
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
             <version>${jersey2.version}</version>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson -->
+        
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>${jersey2.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-common -->
+
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-common</artifactId>
@@ -81,7 +81,7 @@
             <version>${jersey2.version}</version>
         </dependency>
 
-        
+        <!-- ARQUIVO DEPENDENCIAS-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -89,28 +89,45 @@
         </dependency>
         
      
-
+        <!-- POSTGRESQL DEPENDENCIAS-->     
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.8</version>
         </dependency>
         
-             
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <!-- JSON DEPENDENCIAS-->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160810</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
         </dependency>
+
+        <!-- EMAIL DEPENDENCIAS-->        
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.6.2</version>
+        </dependency>
         
-     
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 
         
         

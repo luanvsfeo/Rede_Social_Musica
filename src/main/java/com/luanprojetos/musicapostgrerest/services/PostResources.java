@@ -22,7 +22,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  *
- * @author medilab
+ * @author Luan
  */
 @Path("/post")
 public class PostResources {
