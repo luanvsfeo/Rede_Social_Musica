@@ -13,7 +13,7 @@ $("#btn-enviar").on("click", function () {
     var senha = $("#inputSenha").val();
     var json = {};
 
-    json['login'] = login;
+    json['email'] = login;
     json['senha'] = senha;
 
     console.log(json)
@@ -36,14 +36,14 @@ $("#btn-enviar").on("click", function () {
 
 $("#btn-cadastrar").on("click", function () {
 
-    var login = $("#inputLogin").val();
+    //var login = $("#inputLogin").val();
     var nome = $("#inputNome").val();
     var senha = $("#inputSenha").val();
     var email = $("#inputEmail").val();
 
     var json = {};
 
-    json['login'] = login;
+    //json['login'] = login;
     json['nome'] = nome;
     json['senha'] = senha;
     json['email'] = email;
@@ -57,6 +57,12 @@ $("#btn-cadastrar").on("click", function () {
         success: function (data) {
             console.log(data)
             window.location.href = 'verificador.html';
+        }, error: function (request, status, error) {
+            if (request.status == 200) {
+                window.location.href = 'verificador.html';
+            } else {
+                alert(request.status);
+            }
         }
     });
 
@@ -68,18 +74,16 @@ $("#btn-cadastrar").on("click", function () {
 $(function () {
 
     var codigo = localStorage.getItem('usu')
-    console.log(codigo)
-    console.log(`${url}/index.html`)
-
+    
 
 
 });
 
 
 $("#btn-verificar").on("click", function () {
-    
+
     var json = {};
-    
+
     json['email'] = $("#inputEmail").val();
     json['cod_verificacao'] = $("#inputCodigo").val();
 
@@ -91,8 +95,12 @@ $("#btn-verificar").on("click", function () {
         data: JSON.stringify(json),
         success: function (data) {
             window.location.href = 'login.html';
-        }, error: function (data) {
-            alert("Por favor preencha antes de cadastrar");
+        },error: function (request, status, error) {
+            if (request.status == 200) {
+                window.location.href = 'login.html';
+            } else {
+                alert(request.status);
+            }
         }
     });
 

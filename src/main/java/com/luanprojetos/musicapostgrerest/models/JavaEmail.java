@@ -36,8 +36,8 @@ public class JavaEmail {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.port", "587");
-        user = "<seu email>";
-        password = "<sua senha>";
+        user = "feoluan@gmail.com";
+        password = "14010200";
         props.put("mail.smtp.user", user);
         props.put("mail.smtp.password", password);
 

@@ -17,7 +17,7 @@ $(document).ready(function () {
             url: `${url}/rest/usuario/${codigo}/feed`,
             type: "GET",
             success: function (data) {
-
+                console.log(data)
 
                 for (var k in data.posts) {
                     if (data.posts[k].hasOwnProperty("img") && data.posts[k].hasOwnProperty("nome_musica")) {
@@ -82,8 +82,11 @@ $("#logout").on("click", function () {
 
 $("#btn-pesquisar").on("click", function () {
     var nome = $("#example-search-input").val();
+     var codigo = document.cookie;
+    codigo = localStorage.getItem('usu')
+
     $.ajax({
-        url: `${url}/rest/usuario/nome/${nome}`,
+        url: `${url}/rest/usuario/nome/${codigo}/${nome}`,
         type: "GET",
         success: function (data) {
             $(".container").empty();
@@ -137,7 +140,7 @@ $("#btn-pesquisar-musica").on("click", function () {
 
 });
 
-$("#btn-publicar").on("click", function () {
+$(document).on('click', '#btn-publicar', function () {
     var texto = $("#texto-post").val();
 
     var json = {};
@@ -174,8 +177,9 @@ $("#btn-publicar").on("click", function () {
                 contentType: false,
                 success: function (data) {//verificar pq nao esta caindo no sucess
                     $("#texto-post").val("");
-                    console.log("a")
-
+                    $(".musica").attr("placeholder","");
+                    $('input').val("");
+                    $('label.custom-file-label').text("");
                 }, error: function (data) {
 
                    console.log("erro")
@@ -198,6 +202,9 @@ $("#btn-publicar").on("click", function () {
             data: form,
             success: function (data) {//verificar pq nao esta caindo no sucess
                 $("#texto-post").val("");
+                $(".musica").attr("placeholder","");
+                $('input').val("");
+                $('label.custom-file-label').text("");
                 console.log("a")
 
             }, error: function (data) {
@@ -206,10 +213,6 @@ $("#btn-publicar").on("click", function () {
             }
         });
     }
-
-
-
-
 
 
 });

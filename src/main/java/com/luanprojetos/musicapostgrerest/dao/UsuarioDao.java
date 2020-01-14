@@ -24,9 +24,9 @@ public class UsuarioDao extends ConexaoBd {
     public JSONObject getJSONObjectByUsuario(Usuario usu) {
         JSONObject jsonResposta = null;
         try {
-            String SQL = "Select * from usuario where login = ? and senha  = ? and cod_verificacao is null";
+            String SQL = "Select * from usuario where email = ? and senha  = ? and cod_verificacao is null";
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
-            stmt.setString(1, usu.getLogin());
+            stmt.setString(1, usu.getEmail());
             stmt.setString(2, usu.getSenha());
             ResultSet rs = stmt.executeQuery();
 
@@ -61,10 +61,10 @@ public class UsuarioDao extends ConexaoBd {
         }
     }
 
-    public JSONArray getUsuarioByName(String nome) {
+    public JSONArray getUsuarioByName(String nome,int id) {
         JSONArray jsonResposta = new JSONArray();
         try {
-            String SQL = "Select * from usuario where nome like '%" + nome + "%'";
+            String SQL = "Select * from usuario where nome like '%" + nome + "%' and codigo not in (select codigo from usuario where codigo= ?)";
 
             /*
             
@@ -83,7 +83,7 @@ public class UsuarioDao extends ConexaoBd {
             
              */
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
-            //stmt.setInt(0, 0);
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -118,30 +118,18 @@ public class UsuarioDao extends ConexaoBd {
         JSONObject jsonObj = new JSONObject(json);
         String codVerificador = Integer.toString(getRandomNumberAsVerificationCod());
         try {
-            String SQL = "insert into Usuario (nome,login,senha,email,cod_verificacao)\n"
-                    + "            select distinct ? as nome,? as login, ? as senha, ? as email , ? as cod_verificacao from usuario\n"
+            String SQL = "insert into Usuario (nome,senha,email,cod_verificacao)\n"
+                    + "            select distinct ? as nome, ? as senha, ? as email , ? as cod_verificacao from usuario\n"
                     + "            where \n"
-                    + "            not exists (select email from usuario where email = ? )"
-                    + "and not exists (select login from usuario where login = ? ) ";
-
-
-            /*
-            insert into Usuario (nome,login,senha,email,cod_verificacao)
-            select distinct ? as nome,? as login, ? as senha, ? as email , ? as cod_verificacao from usuario
-            where 
-            not exists (select email from usuario where email = ?)
-
-            
-            
-             */
+                    + "            not exists (select email from usuario where email = ? )";
+    
             PreparedStatement stmt = super.getConnetion().prepareStatement(SQL);
             stmt.setString(1, jsonObj.getString("nome"));
-            stmt.setString(2, jsonObj.getString("login"));
-            stmt.setString(3, jsonObj.getString("senha"));
-            stmt.setString(4, jsonObj.getString("email"));
-            stmt.setString(5, codVerificador);
-            stmt.setString(6, jsonObj.getString("email"));
-            stmt.setString(7, jsonObj.getString("login"));
+            //stmt.setString(2, jsonObj.getString("login"));
+            stmt.setString(2, jsonObj.getString("senha"));
+            stmt.setString(3, jsonObj.getString("email"));
+            stmt.setString(4, codVerificador);
+            stmt.setString(5, jsonObj.getString("email"));
 
             stmt.execute();
 

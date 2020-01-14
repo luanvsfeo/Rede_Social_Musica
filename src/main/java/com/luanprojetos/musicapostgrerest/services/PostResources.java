@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.luanprojetos.musicapostgrerest.dao.PostDao;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -31,7 +32,7 @@ public class PostResources {
     @Path("/")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response newPost(@FormDataParam("file") File inputfile, @FormDataParam("file") FormDataContentDisposition fileMetaData, @FormDataParam("json") String json) throws IOException {//
+    public Response newPost(@FormDataParam("file") InputStream inputfile, @FormDataParam("file") FormDataContentDisposition fileMetaData, @FormDataParam("json") String json) throws IOException {//
         try {
             if (inputfile == null) {
                 if (new PostDao().setNewPostWithoutImage(json)) {

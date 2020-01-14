@@ -30,6 +30,7 @@ public class UsuarioResources {
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response login(String json) {
         Usuario usu = new Usuario().fromStringToUsuario(json);
         JSONObject resposta = new UsuarioDao().getJSONObjectByUsuario(usu);
@@ -43,10 +44,11 @@ public class UsuarioResources {
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response newUser(String json) {
 
         if (new UsuarioDao().newUsuario(json)) {
-            return Response.ok().build();
+            return Response.ok("ok").build();
         } else {
             return Response.serverError().build();
         }
@@ -91,12 +93,12 @@ public class UsuarioResources {
     }
 
     @GET
-    @Path("/nome/{nome}")
+    @Path("/nome/{id}/{nome}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findUsubyName(@PathParam("nome") String nome) {
+    public Response findUsubyName(@PathParam("nome") String nome,@PathParam("id") int id) {
         JSONObject a = new JSONObject();
 
-        a.put("usuarios", new UsuarioDao().getUsuarioByName(nome));
+        a.put("usuarios", new UsuarioDao().getUsuarioByName(nome,id));
 
         return Response.ok(a.toString()).build();
     }
@@ -104,10 +106,11 @@ public class UsuarioResources {
     @PUT
     @Path("/verificar/")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response validateUsu(String json) {
 
         if (new UsuarioDao().validateUsuario(json)) {
-            return Response.ok().build();
+            return Response.ok("ok").build();
         } else {
             return Response.serverError().build();
         }
